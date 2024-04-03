@@ -1,13 +1,8 @@
-import { Button } from 'antd';
-import './App.css';
+import "./App.css";
+import { Contacts } from "./components/contents/contacts";
 
 function App() {
-  return (
-    <div className="App">
-      Hello, 
-      <Button type='primary' size='small'>world</Button>
-    </div>
-  );
+  return <Contacts></Contacts>;
 }
 
 export default App;
