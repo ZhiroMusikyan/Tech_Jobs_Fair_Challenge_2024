@@ -6,6 +6,7 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 import Navbar from "./header/Navbar";
+import { Contacts } from "./components/contents/contacts/contacts";
 const { Content, Sider } = Layout;
 
 const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
@@ -45,17 +46,20 @@ function App() {
         </Sider>
         <Layout
           style={{
-            padding: "0 24px 24px",
-            minHeight: "90vh",
+            padding: "24px 24px",
+            minHeight: "100vh",
           }}
         >
           <Content
             style={{
               padding: 24,
               margin: 0,
+              minHeight: 280,
+              background: "white",
+              borderRadius: "20px",
             }}
           >
-            Content
+            <Contacts></Contacts>
           </Content>
         </Layout>
       </Layout>
