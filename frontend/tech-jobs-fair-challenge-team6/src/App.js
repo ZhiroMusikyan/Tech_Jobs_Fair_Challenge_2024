@@ -1,53 +1,21 @@
 import React from "react";
-import {
-  LaptopOutlined,
-  NotificationOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import { Layout, Menu } from "antd";
+import { Layout } from "antd";
 import Navbar from "./header/Navbar";
 import { Contacts } from "./components/contents/contacts/contacts";
-const { Content, Sider } = Layout;
-
-const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
-  (icon, index) => {
-    const key = String(index + 1);
-    return {
-      key: `sub${key}`,
-      icon: React.createElement(icon),
-      label: `subnav ${key}`,
-      children: new Array(4).fill(null).map((_, j) => {
-        const subKey = index * 4 + j + 1;
-        return {
-          key: subKey,
-          label: `option${subKey}`,
-        };
-      }),
-    };
-  }
-);
+import Sidebar from "./sidebar/Sidebar";
+const { Content } = Layout;
 
 function App() {
   return (
     <Layout>
       <Navbar />
       <Layout>
-        <Sider width={200} style={{}}>
-          <Menu
-            mode="inline"
-            defaultSelectedKeys={["1"]}
-            defaultOpenKeys={["sub1"]}
-            style={{
-              height: "100%",
-              borderRight: 0,
-            }}
-            items={items2}
-          />
-        </Sider>
+        <Sidebar />
         <Layout
           style={{
             padding: "24px 24px",
-            minHeight: "100vh",
+            height: "90vh",
+            overflow: "auto",
           }}
         >
           <Content
