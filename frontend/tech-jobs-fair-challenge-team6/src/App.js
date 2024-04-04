@@ -7,14 +7,13 @@ const { Content } = Layout;
 
 function App() {
   return (
-    <Layout>
+    <Layout style={{ height: "100%" }}>
       <Navbar />
       <Layout>
         <Sidebar />
         <Layout
           style={{
             padding: "24px 24px",
-            height: "90vh",
             overflow: "auto",
           }}
         >
