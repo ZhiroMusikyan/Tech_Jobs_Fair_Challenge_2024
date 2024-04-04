@@ -2,13 +2,6 @@ import React from "react";
 import { Button, Form, Input, Modal, Select } from "antd";
 const { Option } = Select;
 
-const onFinish = (values) => {
-  console.log("Success:", values);
-};
-const onFinishFailed = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
-
 const prefixSelector = (
   <Form.Item name="prefix" noStyle>
     <Select style={{ width: 70 }}>
@@ -19,12 +12,25 @@ const prefixSelector = (
 );
 
 const ContactForm = ({ open, onConfirm, onCancel }) => {
+  const [form] = Form.useForm();
+
+  const onFinish = (values) => {
+    form.resetFields();
+    console.log("Success:", values);
+    onConfirm();
+  };
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
   return (
     <>
       <Modal title="New contact" open={open} onCancel={onCancel} footer={null}>
         <Form
           name="basic"
           layout="vertical"
+          form={form}
+          initialValues={{ prefix: "1" }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
