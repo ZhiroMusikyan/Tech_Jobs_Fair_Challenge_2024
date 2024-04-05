@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Form, Modal, Tabs, message } from "antd";
 import BasicFields from "./components/basic_fields";
 import AdvancedFields from "./components/advanced_fields";
@@ -34,12 +34,12 @@ const ContactForm = ({ open, onConfirm, onCancel }) => {
   const items = [
     {
       key: "1",
-      label: "Basic",
+      label: "Basic info",
       children: <BasicFields></BasicFields>,
     },
     {
       key: "2",
-      label: "Advanced",
+      label: "More info",
       children: <AdvancedFields></AdvancedFields>,
     },
   ];
