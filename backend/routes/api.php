@@ -19,8 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::middleware(['auth'])->group(function () {
 //Route::group(['middleware' => ['auth']], function () {
-});
-    Route::resource("/contacts", ContactController::class);
+    });
+    Route::resource("/contacts", 'ContactController');
 
     Route::post('/login', 'LoginController@login')->name('login');
     Route::post('/logout', 'LoginController@logout');
