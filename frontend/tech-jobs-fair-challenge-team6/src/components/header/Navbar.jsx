@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { Header } from "antd/es/layout/layout";
-import ContactForm from "../components/contact_form/contact_form";
+import ContactForm from "../contact_form/contact_form";
 import "./navbar.css";
 
 const Navbar = () => {

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Checkbox, Typography } from "antd";
 
 const { Title } = Typography;
 
-const data = {
+const datar = {
   department: [
     { label: "IT", value: 0 },
     { label: "HR", value: 1 },
@@ -18,18 +18,10 @@ const data = {
   ],
 };
 
-const Filter = () => {
-  const [filterParams, setFilterParams] = useState({});
-
-  const handleOnChange = (checkedValues, t) => {
-    setFilterParams((prevState) => ({ ...prevState, [t]: checkedValues }));
-  };
-
-  console.log("gggggg", filterParams);
-
+const Filter = (handleChange) => {
   return (
     <div>
-      {Object.entries(data).map(([key, options]) => (
+      {Object.entries(datar).map(([key, options]) => (
         <div key={key}>
           <Title level={5}>{key}</Title>
           <Checkbox.Group
@@ -38,7 +30,7 @@ const Filter = () => {
               display: "flex",
               flexDirection: "column",
             }}
-            onChange={(checkedValues) => handleOnChange(checkedValues, key)}
+            onChange={(checkedValues) => handleChange(checkedValues, key)}
             options={options}
           />
         </div>
