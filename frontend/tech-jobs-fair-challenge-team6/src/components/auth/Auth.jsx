@@ -2,7 +2,6 @@ import React from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
-import "./auth.css";
 import { ROUTS } from "../../constants/constants";
 
 const Auth = () => {
@@ -17,7 +16,7 @@ const Auth = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh", // Set height to occupy the full viewport height
+        height: "100vh",
       }}
     >
       <Form
