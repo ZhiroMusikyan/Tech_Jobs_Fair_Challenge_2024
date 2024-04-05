@@ -1,28 +1,12 @@
 import { DatePicker, Form, Input, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import ProfilePictureInput from "./profile_picture_field";
 
 const AdvancedFields = () => {
   return (
     <>
       <Form.Item label="Profile picture:" valuePropName="fileList">
-        <Upload action="/upload.do" listType="picture-card">
-          <button
-            style={{
-              border: 0,
-              background: "none",
-            }}
-            type="button"
-          >
-            <PlusOutlined />
-            <div
-              style={{
-                marginTop: 8,
-              }}
-            >
-              Upload
-            </div>
-          </button>
-        </Upload>
+        <ProfilePictureInput />
       </Form.Item>
 
       <Form.Item
