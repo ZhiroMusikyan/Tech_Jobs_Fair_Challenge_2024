@@ -57,7 +57,11 @@ const ContactForm = ({ open, onConfirm, onCancel }) => {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Tabs defaultActiveKey="1" items={items} />
+          <Tabs
+            defaultActiveKey="1"
+            items={items}
+            style={{ minHeight: "550px" }}
+          />
           <Form.Item style={{ display: "flex", justifyContent: "end" }}>
             <Button type="primary" htmlType="submit">
               Add
