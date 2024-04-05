@@ -35,7 +35,11 @@ class ContactController extends Controller
         }
 
         $contacts = $query->paginate(4);
-        event( new testWebsocket);
-        return view('contacts.index', compact('contacts'));
+//        event( new testWebsocket);
+        return response()->json(["contacts" => $contacts]);
+    }
+
+    public function createContact(Request $request){
+        $contact = new Contact();
     }
 }
