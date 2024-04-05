@@ -24,14 +24,13 @@ function App() {
   };
 
   return (
-    <Layout>
+    <Layout style={{ height: "100%" }}>
       <Navbar />
       <Layout>
         <Sidebar handleFilterParamsChange={handleFilterParamsChange} />
         <Layout
           style={{
             padding: "24px 24px",
-            height: "90vh",
             overflow: "auto",
           }}
         >
