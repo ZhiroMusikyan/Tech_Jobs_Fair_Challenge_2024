@@ -1,14 +1,8 @@
-import { DatePicker, Form, Input, Upload } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import ProfilePictureInput from "./profile_picture_field";
+import { DatePicker, Form, Input } from "antd";
 
 const AdvancedFields = () => {
   return (
     <>
-      <Form.Item label="Profile picture:" valuePropName="fileList">
-        <ProfilePictureInput />
-      </Form.Item>
-
       <Form.Item
         label="Email:"
         name="email"
