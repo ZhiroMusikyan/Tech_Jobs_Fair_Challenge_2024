@@ -38,10 +38,22 @@ const TabForm = ({
     console.log(errorInfo);
     showErrorMsg();
   };
+
+  const handleCancel = () => {
+    form.resetFields();
+    onCancel();
+  };
+
   return (
     <>
       {contextHolder}
-      <Modal title={title} open={open} onCancel={onCancel} footer={null}>
+      <Modal
+        title={title}
+        open={open}
+        onConfirm={onConfirm}
+        onCancel={handleCancel}
+        footer={null}
+      >
         <Form
           name="basic"
           layout="vertical"
