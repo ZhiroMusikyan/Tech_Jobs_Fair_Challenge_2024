@@ -1,4 +1,4 @@
-import { ContactList } from "./components/contact_list";
+import { ContactList } from "./components/ContactList";
 import { Flex, Cascader } from "antd";
 
 const sortOptions = [

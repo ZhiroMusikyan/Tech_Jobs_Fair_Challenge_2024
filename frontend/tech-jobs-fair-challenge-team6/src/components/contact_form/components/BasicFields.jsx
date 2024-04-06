@@ -1,5 +1,5 @@
 import { Form, Input, Select } from "antd";
-import prefixSelector from "./prefix_selector";
+import prefixSelector from "./PrefixSelector";
 import { useState } from "react";
 const { Option } = Select;
 

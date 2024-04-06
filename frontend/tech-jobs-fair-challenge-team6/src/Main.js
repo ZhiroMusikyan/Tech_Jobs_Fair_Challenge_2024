@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Alert, Layout } from "antd";
 import Navbar from "./components/header/Navbar";
-import { Contacts } from "./components/contents/contacts/contacts";
+import { Contacts } from "./components/contents/contacts/Contacts";
 import Sidebar from "./components/sidebar/Sidebar";
 import { getAllContacts } from "./api/contacts";
 import { useQuery } from "@tanstack/react-query";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ROUTS } from "./constants/constants";
 const { Content } = Layout;
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Form, Modal, Tabs, message } from "antd";
-import BasicFields from "./components/basic_fields";
-import AdvancedFields from "./components/advanced_fields";
+import BasicFields from "./components/BasicFields";
+import AdvancedFields from "./components/AdvancedFields";
 const ContactForm = ({ open, onConfirm, onCancel }) => {
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
