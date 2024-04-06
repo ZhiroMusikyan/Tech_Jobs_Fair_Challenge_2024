@@ -25,4 +25,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/login', 'LoginController@login')->name('login');
     Route::post('/logout', 'LoginController@logout');
     Route::get("/contact/types", 'ContactTypeController@index');
+    Route::get("/departments", 'DepartmentController@index');
 

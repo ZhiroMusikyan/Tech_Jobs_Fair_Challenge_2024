@@ -1,18 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+    namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+    use App\Department;
+    use Illuminate\Http\JsonResponse;
+    use Illuminate\Http\Request;
 
-class DepartmentController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    class DepartmentController extends Controller
     {
-			return response()->json(['departments'=>Department::all()], 200);
+        /**
+         * Display a listing of the resource.
+         *
+         * @return JsonResponse
+         */
+        public function index(): JsonResponse
+        {
+            return response()->json(['departments' => Department::all()], 200);
+        }
     }
-}
