@@ -1,11 +1,8 @@
 import React from "react";
 import BasicFields from "./components/BasicFields";
 import AdvancedFields from "./components/AdvancedFields";
-import FormLayout from "./components/FormLayout";
-
-const successMessage = "The contact was added successfully!";
-const errorMessage =
-  "Ups! Something went wrong, try to check the values entered.";
+import { errorMessage, successMessage } from "./constants/messages";
+import TabForm from "../tab_form/TabForm";
 
 const NewContactForm = ({ open, onConfirm, onCancel }) => {
   const items = [
@@ -22,15 +19,16 @@ const NewContactForm = ({ open, onConfirm, onCancel }) => {
   ];
 
   return (
-    <FormLayout
+    <TabForm
       title="New contact"
       confirmValue="Add"
       items={items}
-      successMessage={successMessage}
-      errorMessage={errorMessage}
+      successMsg={successMessage}
+      errorMsg={errorMessage}
       onConfirm={onConfirm}
       onCancel={onCancel}
       open={open}
+      initialValues={{ prefix: "1" }}
     />
   );
 };
