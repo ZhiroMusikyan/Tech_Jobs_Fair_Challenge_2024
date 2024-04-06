@@ -6,7 +6,7 @@ import { UserToForm } from "../../../../utils/user_to_form";
 
 export function ContactList({ contactsList, currentPage }) {
   const [viewContact, setViewContact] = useState("");
-  const [editData, setEditData] = useState(undefined);
+  const [editData, setEditData] = useState("");
   console.log(contactsList);
 
   const handleConfirm = () => {
@@ -14,8 +14,7 @@ export function ContactList({ contactsList, currentPage }) {
   };
 
   const handleCancel = () => {
-    UserToForm({});
-    setEditData(undefined);
+    setEditData("");
   };
 
   return (
@@ -35,7 +34,7 @@ export function ContactList({ contactsList, currentPage }) {
                 href="#edit"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setEditData(UserToForm(item));
+                  setEditData(item);
                 }}
               >
                 Edit
@@ -61,11 +60,13 @@ export function ContactList({ contactsList, currentPage }) {
           contactData={viewContact}
         />
       )}
-      <EditContactForm
-        data={editData}
-        onConfirm={handleConfirm}
-        onCancel={handleCancel}
-      ></EditContactForm>
+      {editData && (
+        <EditContactForm
+          data={editData}
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+        />
+      )}
     </>
   );
 }
