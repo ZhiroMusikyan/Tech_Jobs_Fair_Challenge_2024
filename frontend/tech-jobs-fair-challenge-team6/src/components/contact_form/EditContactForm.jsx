@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BasicFields from "./components/BasicFields";
 import AdvancedFields from "./components/AdvancedFields";
 import { errorMessage, successMessage } from "./constants/messages";
 import TabForm from "../tab_form/TabForm";
 
-const NewContactForm = ({ open, onConfirm, onCancel }) => {
+const EditContactForm = ({ data, onConfirm, onCancel }) => {
   const items = [
     {
       key: "1",
@@ -20,16 +20,16 @@ const NewContactForm = ({ open, onConfirm, onCancel }) => {
 
   return (
     <TabForm
-      title="New contact"
-      confirmValue="Add"
+      title="Edit contact"
+      confirmValue="Edit"
       items={items}
       successMsg={successMessage}
       errorMsg={errorMessage}
       onConfirm={onConfirm}
       onCancel={onCancel}
-      open={open}
-      initialValues={{ prefix: "1" }}
+      open={data !== undefined}
+      initialValues={data}
     />
   );
 };
-export default NewContactForm;
+export default EditContactForm;

@@ -1,6 +1,6 @@
 import { Button, Form, Modal, Tabs, message } from "antd";
 
-const FormLayout = (
+const TabForm = ({
   open,
   items,
   title,
@@ -8,8 +8,9 @@ const FormLayout = (
   errorMsg,
   confirmValue,
   onConfirm,
-  onCancel
-) => {
+  onCancel,
+  initialValues,
+}) => {
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -30,30 +31,43 @@ const FormLayout = (
   const onFinish = (values) => {
     form.resetFields();
     showSuccessMsg();
+    console.log(values);
     onConfirm();
   };
   const onFinishFailed = (errorInfo) => {
     console.log(errorInfo);
     showErrorMsg();
   };
+
+  const handleCancel = () => {
+    form.resetFields();
+    onCancel();
+  };
+
   return (
     <>
       {contextHolder}
-      <Modal title={title} open={false} onCancel={onCancel} footer={null}>
+      <Modal
+        title={title}
+        open={open}
+        onConfirm={onConfirm}
+        onCancel={handleCancel}
+        footer={null}
+      >
         <Form
           name="basic"
           layout="vertical"
           form={form}
-          initialValues={{ prefix: "1" }}
+          initialValues={initialValues}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          {/* <Tabs
+          <Tabs
             defaultActiveKey="1"
             items={items}
             style={{ minHeight: "550px" }}
-          /> */}
+          />
           <Form.Item style={{ display: "flex", justifyContent: "end" }}>
             <Button type="primary" htmlType="submit">
               {confirmValue}
@@ -65,4 +79,4 @@ const FormLayout = (
   );
 };
 
-export default FormLayout;
+export default TabForm;

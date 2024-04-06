@@ -40,7 +40,7 @@ const BasicFields = () => {
 
       <Form.Item
         label="Phone number:"
-        name="phoneNumber"
+        name="number"
         rules={[
           {
             required: true,
