@@ -42,7 +42,7 @@ function Main() {
                 overflow: "auto",
               }}
             >
-              <Alert message="Success Tips" type="success" showIcon closable />
+              {/* <Alert message="Success Tips" type="success" showIcon closable /> */}
               <Content
                 style={{
                   padding: 24,
