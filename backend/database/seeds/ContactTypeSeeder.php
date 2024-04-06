@@ -16,7 +16,6 @@ class ContactTypeSeeder extends Seeder
             'Internal',
             'External',
             'Partner',
-            'Created by me',
         ];
 
         foreach ($contactTypeLabels as $label) {
