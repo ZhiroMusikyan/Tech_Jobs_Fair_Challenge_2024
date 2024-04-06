@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { Header } from "antd/es/layout/layout";
-import ContactForm from "../contact_form/contact_form";
+import ContactForm from "../contact_form/ContactForm";
 import "./navbar.css";
 import { useNavigate } from "react-router-dom";
 import { ROUTS } from "../../constants/constants";
