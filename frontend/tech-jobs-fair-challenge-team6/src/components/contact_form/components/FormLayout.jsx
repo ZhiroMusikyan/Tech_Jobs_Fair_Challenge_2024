@@ -39,7 +39,7 @@ const FormLayout = (
   return (
     <>
       {contextHolder}
-      <Modal title={title} open={open} onCancel={onCancel} footer={null}>
+      <Modal title={title} open={false} onCancel={onCancel} footer={null}>
         <Form
           name="basic"
           layout="vertical"
