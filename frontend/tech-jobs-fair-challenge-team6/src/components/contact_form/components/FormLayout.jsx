@@ -1,28 +1,34 @@
-import React from "react";
 import { Button, Form, Modal, Tabs, message } from "antd";
-import BasicFields from "./components/BasicFields";
-import AdvancedFields from "./components/AdvancedFields";
-const ContactForm = ({ open, onConfirm, onCancel }) => {
+
+const FormLayout = (
+  open,
+  items,
+  title,
+  successMsg,
+  errorMsg,
+  confirmValue,
+  onConfirm,
+  onCancel
+) => {
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
 
   const showSuccessMsg = () => {
     messageApi.open({
       type: "success",
-      content: "The contact was added successfully!",
+      content: successMsg,
     });
   };
 
   const showErrorMsg = () => {
     messageApi.open({
       type: "error",
-      content: "Ups! Something went wrong, try to check the values entered.",
+      content: errorMsg,
     });
   };
 
   const onFinish = (values) => {
     form.resetFields();
-    console.log("Success:", values);
     showSuccessMsg();
     onConfirm();
   };
@@ -30,24 +36,10 @@ const ContactForm = ({ open, onConfirm, onCancel }) => {
     console.log(errorInfo);
     showErrorMsg();
   };
-
-  const items = [
-    {
-      key: "1",
-      label: "Basic info",
-      children: <BasicFields></BasicFields>,
-    },
-    {
-      key: "2",
-      label: "More info",
-      children: <AdvancedFields></AdvancedFields>,
-    },
-  ];
-
   return (
     <>
       {contextHolder}
-      <Modal title="New contact" open={open} onCancel={onCancel} footer={null}>
+      <Modal title={title} open={open} onCancel={onCancel} footer={null}>
         <Form
           name="basic"
           layout="vertical"
@@ -57,14 +49,14 @@ const ContactForm = ({ open, onConfirm, onCancel }) => {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Tabs
+          {/* <Tabs
             defaultActiveKey="1"
             items={items}
             style={{ minHeight: "550px" }}
-          />
+          /> */}
           <Form.Item style={{ display: "flex", justifyContent: "end" }}>
             <Button type="primary" htmlType="submit">
-              Add
+              {confirmValue}
             </Button>
           </Form.Item>
         </Form>
@@ -72,4 +64,5 @@ const ContactForm = ({ open, onConfirm, onCancel }) => {
     </>
   );
 };
-export default ContactForm;
+
+export default FormLayout;
