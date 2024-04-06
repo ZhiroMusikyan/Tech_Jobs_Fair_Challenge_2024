@@ -1,9 +1,9 @@
 <?php
 
-    use App\ContactType;
     use Illuminate\Database\Seeder;
+    use Illuminate\Support\Facades\DB;
 
-class ContactTypeSeeder extends Seeder
+    class ContactTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,7 +20,7 @@ class ContactTypeSeeder extends Seeder
         ];
 
         foreach ($contactTypeLabels as $label) {
-            ContactType::create(['label' => $label]);
+            DB::table('contact_types')::create(['label' => $label]);
         }
     }
 }
