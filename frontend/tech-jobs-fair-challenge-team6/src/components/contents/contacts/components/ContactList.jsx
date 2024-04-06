@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Avatar, List } from "antd";
-import ContactForm from "../../../contact_form/contact_form";
+import ContactForm from "../../../contact_form/NewContactForm";
 
 export function ContactList({ contactsList, currentPage }) {
   const [viewContact, setViewContact] = useState();
