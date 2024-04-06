@@ -1,4 +1,4 @@
-import { ContactList } from "./components/contact_list";
+import { ContactList } from "./components/ContactList";
 import { Flex, Cascader } from "antd";
 
 const sortOptions = [
@@ -15,12 +15,13 @@ const onSortOptionChange = (value) => {
   console.log(value);
 };
 
-export function Contacts() {
+export function Contacts({ currentPage, contactsList }) {
+  console.log("contactsList", contactsList?.lenght);
   return (
     <>
       <Flex justify="space-between" align="center">
         <label style={{ fontWeight: "bold", fontSize: "500" }}>
-          4 contacts
+          {contactsList?.length} contacts
         </label>
         <Cascader
           options={sortOptions}
@@ -28,7 +29,10 @@ export function Contacts() {
           placeholder="Sort by"
         />
       </Flex>
-      <ContactList></ContactList>
+      <ContactList
+        contactsList={contactsList}
+        currentPage={currentPage}
+      ></ContactList>
     </>
   );
 }
