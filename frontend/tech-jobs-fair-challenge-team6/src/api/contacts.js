@@ -13,7 +13,25 @@ const getAllContacts = async (filterParams) => {
 
 const createContact = async (contactData) => {
   try {
-    const response = await axios.post("/contacts", contactData);
+    const d = contactData;
+    d.user_id = 1;
+    debugger;
+    console.log("createContact", d);
+    const response = await axios.post(
+      "/contacts",
+      JSON.stringify({
+        profile_picture: "asdd",
+        name: "asd",
+        surname: "qwer",
+        email: "qwerled@mail.ru",
+        number: "1233753231",
+        user_id: 1,
+        social_media_url: "Qwer",
+        date_of_birth: "1982-09-01",
+        type_id: "qwer",
+        note: "qwrt",
+      })
+    );
     return response.data;
   } catch (error) {
     throw error;

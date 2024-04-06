@@ -1,10 +1,14 @@
 import React from "react";
 import BasicFields from "./components/BasicFields";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AdvancedFields from "./components/AdvancedFields";
 import { errorMessage, successMessage } from "./constants/messages";
 import TabForm from "../tab_form/TabForm";
+import { createContact } from "../../api/contacts";
 
 const NewContactForm = ({ open, onConfirm, onCancel }) => {
+  const queryClient = useQueryClient();
+
   const items = [
     {
       key: "1",
@@ -18,6 +22,19 @@ const NewContactForm = ({ open, onConfirm, onCancel }) => {
     },
   ];
 
+  const { mutate } = useMutation({
+    mutationFn: (e) => createContact(e),
+    onSuccess: () => {
+      console.log("onSuccess");
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["getContactsList"] });
+    },
+  });
+  const handleConfirm = (value) => {
+    onConfirm();
+    mutate({ ...value });
+  };
+
   return (
     <TabForm
       title="New contact"
@@ -25,7 +42,7 @@ const NewContactForm = ({ open, onConfirm, onCancel }) => {
       items={items}
       successMsg={successMessage}
       errorMsg={errorMessage}
-      onConfirm={onConfirm}
+      onConfirm={handleConfirm}
       onCancel={onCancel}
       open={open}
       initialValues={{ prefix: "1" }}
