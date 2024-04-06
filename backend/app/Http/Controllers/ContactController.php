@@ -24,29 +24,32 @@
         {
             $query = Contact::query();
 
-            // Sort by column
-            if ($request->has('sort')) {
-                $sortColumn = $request->input('sort');
-                $sortDirection = $request->input('direction', 'asc');
-
-                $query->orderBy($sortColumn, $sortDirection);
+            // Apply sorting
+            if (isset($request->sort)) {
+                $query->sort($request->input('sort'), $request->input('direction', 'asc'));
             }
 
-            // Advanced search
-            if ($request->has('search')) {
-                $searchTerm = $request->input('search');
-                $query->where(function ($q) use ($searchTerm) {
-                    $q->where('name', 'like', "%$searchTerm%")
-                        ->orWhere('surname', 'like', "%$searchTerm%")
-                        ->orWhere('email', 'like', "%$searchTerm%")
-                        ->orWhere('number', 'like', "%$searchTerm%")
-                        ->orWhere('social_media_url', 'like', "%$searchTerm%")
-                        ->orWhere('date_of_birth', 'like', "%$searchTerm%")
-                        ->orWhere('note', 'like', "%$searchTerm%");
-                });
+            // Apply searching
+            if (isset($request->search)) {
+                $query->search($request->input('search'));
             }
 
-            $contacts = $query->paginate(4);
+            // Apply filtering by contact type
+            if (isset($request->contact_type)) {
+                if ($request->input('contact_type') == 4 && isset($request->user_id)) {
+                    $query->createdByUser($request->input('user_id'));
+                } else {
+                    $query->ofType($request->input('contact_type'));
+                }
+            }
+
+            // Apply filtering based on department ID
+            if (isset($request->department_id)) {
+                $query->ofDepartment($request->input('department_id'));
+            }
+
+            $contacts = $query->paginate(10);
+
             return response()->json(["contacts" => $contacts], 200);
         }
 
@@ -57,8 +60,10 @@
          * @return JsonResponse
          * @throws ValidationException
          */
-        public function store(Request $request): JsonResponse
-        {
+        public
+        function store(
+            Request $request
+        ): JsonResponse {
             // Validate the request
             $rules = [
                 'user_id' => 'required',
@@ -71,10 +76,10 @@
                 'date_of_birth' => 'nullable|date',
                 'type_id' => 'nullable|string',
                 'note' => 'nullable|string',
+                'department_id' => 'nullable|string'
             ];
             // Validate the request
             $validator = Validator::make($request->all(), $rules);
-
             // Check if validation fails
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
@@ -94,8 +99,11 @@
          * @return JsonResponse
          * @throws ValidationException
          */
-        public function update(Request $request, int $id): JsonResponse
-        {
+        public
+        function update(
+            Request $request,
+            int $id
+        ): JsonResponse {
             // Define validation rules
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string',
@@ -107,6 +115,7 @@
                 'date_of_birth' => 'nullable|date',
                 'type_id' => 'nullable|string',
                 'note' => 'nullable|string',
+                'department_id' => 'nullable|string'
             ]);
 
             // Check if validation fails
@@ -128,8 +137,10 @@
          * @param int $id
          * @return JsonResponse
          */
-        public function destroy(int $id): JsonResponse
-        {
+        public
+        function destroy(
+            int $id
+        ): JsonResponse {
             // Find the contact by ID
             $contact = Contact::findOrFail($id);
 
