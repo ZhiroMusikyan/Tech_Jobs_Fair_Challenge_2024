@@ -3,6 +3,7 @@ import BasicFields from "./components/BasicFields";
 import AdvancedFields from "./components/AdvancedFields";
 import { errorMessage, successMessage } from "./constants/messages";
 import TabForm from "../tab_form/TabForm";
+import { UserToForm } from "../../utils/user_to_form";
 
 const EditContactForm = ({ data, onConfirm, onCancel }) => {
   const items = [
@@ -27,8 +28,8 @@ const EditContactForm = ({ data, onConfirm, onCancel }) => {
       errorMsg={errorMessage}
       onConfirm={onConfirm}
       onCancel={onCancel}
-      open={data !== undefined}
-      initialValues={data}
+      open
+      initialValues={UserToForm(data)}
     />
   );
 };

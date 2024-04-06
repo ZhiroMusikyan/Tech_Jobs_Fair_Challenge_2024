@@ -1,9 +1,22 @@
 import React, { useState } from "react";
 import { Avatar, List } from "antd";
-import ContactForm from "../../../contact_form/NewContactForm";
+import ViewContactModal from "../../../modals/ViewContactModal";
+import EditContactForm from "../../../contact_form/EditContactForm";
+import { UserToForm } from "../../../../utils/user_to_form";
 
 export function ContactList({ contactsList, currentPage }) {
-  const [viewContact, setViewContact] = useState();
+  const [viewContact, setViewContact] = useState("");
+  const [editData, setEditData] = useState("");
+  console.log(contactsList);
+
+  const handleConfirm = () => {
+    setEditData(undefined);
+  };
+
+  const handleCancel = () => {
+    setEditData("");
+  };
+
   return (
     <>
       <List
@@ -13,10 +26,17 @@ export function ContactList({ contactsList, currentPage }) {
           <List.Item
             onClick={() => setViewContact(item)}
             actions={[
-              <a key="list-loadmore-call" href={`tel:+33 230 123 1230`}>
+              <a key="list-delete" href="#delete">
                 Delete
               </a>,
-              <a key="list-loadmore-edit" href="...">
+              <a
+                key="list-edit"
+                href="#edit"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setEditData(item);
+                }}
+              >
                 Edit
               </a>,
             ]}
@@ -33,6 +53,20 @@ export function ContactList({ contactsList, currentPage }) {
           </List.Item>
         )}
       />
+      {viewContact && (
+        <ViewContactModal
+          onClose={() => setViewContact("")}
+          customFooter={null}
+          contactData={viewContact}
+        />
+      )}
+      {editData && (
+        <EditContactForm
+          data={editData}
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+        />
+      )}
     </>
   );
 }
