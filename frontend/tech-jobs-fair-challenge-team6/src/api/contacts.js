@@ -7,8 +7,8 @@ const getAllContacts = async (filterParams) => {
     url += `?${queryParams.toString()}`;
   }
   //  contacts params seted for test,
-  const response = await axios.get("/comments");
-  return response.data;
+  const response = await axios.get("/contacts");
+  return response.data.contacts;
 };
 
 const createContact = async (contactData) => {

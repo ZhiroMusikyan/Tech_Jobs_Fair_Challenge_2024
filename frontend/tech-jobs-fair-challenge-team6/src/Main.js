@@ -19,7 +19,7 @@ function Main() {
 
   //   console.log("isLoading", isLoading);
   //   console.log("error", error);
-  //   console.log("data", data);
+  // console.log("data", data);
 
   const handleFilterParamsChange = (checkedValues, key) => {
     setFilterParams((prevState) => ({ ...prevState, [key]: checkedValues }));
@@ -52,7 +52,10 @@ function Main() {
                   borderRadius: "20px",
                 }}
               >
-                <Contacts></Contacts>
+                <Contacts
+                  currentPage={data?.current_page}
+                  contactsList={data?.data}
+                ></Contacts>
               </Content>
             </Layout>
           </Layout>

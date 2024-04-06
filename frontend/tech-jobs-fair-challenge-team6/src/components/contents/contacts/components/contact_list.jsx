@@ -1,48 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { Avatar, List } from "antd";
+import ContactForm from "../../../contact_form/contact_form";
 
-const data = [
-  {
-    title: "Name Surname",
-  },
-  {
-    title: "Name Surname",
-  },
-  {
-    title: "Name Surname",
-  },
-  {
-    title: "Name Surname",
-  },
-];
-
-export function ContactList() {
+export function ContactList({ contactsList, currentPage }) {
+  const [viewContact, setViewContact] = useState();
   return (
-    <List
-      pagination={{ position: "bottom", align: "end" }}
-      dataSource={data}
-      renderItem={(item, index) => (
-        <List.Item
-          actions={[
-            <a key="list-loadmore-call" href={`tel:+33 230 123 1230`}>
-              Call
-            </a>,
-            <a key="list-loadmore-edit" href="...">
-              Edit
-            </a>,
-          ]}
-        >
-          <List.Item.Meta
-            avatar={
-              <Avatar
-                src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`}
-              />
-            }
-            title={<a href="...">{item.title}</a>}
-            description="+33 230 123 1230"
-          />
-        </List.Item>
-      )}
-    />
+    <>
+      <List
+        pagination={{ position: "bottom", align: "end" }}
+        dataSource={contactsList}
+        renderItem={(item, index) => (
+          <List.Item
+            onClick={() => setViewContact(item)}
+            actions={[
+              <a key="list-loadmore-call" href={`tel:+33 230 123 1230`}>
+                Delete
+              </a>,
+              <a key="list-loadmore-edit" href="...">
+                Edit
+              </a>,
+            ]}
+          >
+            <List.Item.Meta
+              avatar={
+                <Avatar
+                  src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`}
+                />
+              }
+              title={item.name + " " + item.surname}
+              description={item.number}
+            />
+          </List.Item>
+        )}
+      />
+    </>
   );
 }
