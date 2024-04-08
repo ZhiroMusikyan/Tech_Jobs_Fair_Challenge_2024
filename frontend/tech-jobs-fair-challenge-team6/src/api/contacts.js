@@ -8,7 +8,6 @@ const getAllContacts = async (filterParams) => {
     const queryParams = new URLSearchParams(filterParams);
     url += `?${queryParams.toString()}`;
   }
-
   const response = await axios.get(url);
   const contacts = response.data.contacts;
   const formatedData = formatContactData(contacts);

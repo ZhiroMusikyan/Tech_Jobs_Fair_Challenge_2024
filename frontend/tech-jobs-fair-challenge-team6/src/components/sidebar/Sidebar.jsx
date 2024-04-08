@@ -8,7 +8,7 @@ const { Sider } = Layout;
 const Sidebar = ({ handleFilterParamsChange }) => {
   return (
     <Sider className="sidebar-box" width={210}>
-      <Filter handleChange={handleFilterParamsChange} />
+      <Filter handleFilterParamsChange={handleFilterParamsChange} />
     </Sider>
   );
 };

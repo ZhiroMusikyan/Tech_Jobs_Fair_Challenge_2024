@@ -17,13 +17,14 @@ function Main() {
     queryFn: () => getAllContacts(filterParams),
   });
 
-  const handleFilterParamsChange = (checkedValues, key) => {
-    setFilterParams((prevState) => ({ ...prevState, [key]: checkedValues }));
-  };
   const navigate = useNavigate();
   if (!isLoggedIn) {
     navigate(ROUTS.logIn);
   }
+
+  const handleFilterParamsChange = (checkedValues, key) => {
+    setFilterParams((prevState) => ({ ...prevState, [key]: checkedValues }));
+  };
 
   const handleFilterParam = (param) => {
     setFilterParams((prevState) => ({ ...prevState, ...param }));
@@ -36,7 +37,7 @@ function Main() {
     <>
       {isLoggedIn ? (
         <Layout style={{ height: "100%" }}>
-          <Navbar />
+          <Navbar handleSearch={handleFilterParam} />
           <Layout>
             <Sidebar handleFilterParamsChange={handleFilterParamsChange} />
             <Layout
