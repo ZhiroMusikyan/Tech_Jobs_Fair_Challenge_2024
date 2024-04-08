@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Avatar, List } from "antd";
-import ViewContactModal from "../../../modals/ViewContactModal";
 import EditContactForm from "../../../contact_form/EditContactForm";
+import ViewContactModal2 from "../../../modals/ViewContactModal2";
 
 export function ContactList({ contactsList, currentPage }) {
   const [viewContact, setViewContact] = useState("");
@@ -59,9 +59,8 @@ export function ContactList({ contactsList, currentPage }) {
         )}
       />
       {viewContact && (
-        <ViewContactModal
+        <ViewContactModal2
           onClose={() => setViewContact("")}
-          customFooter={null}
           contactData={viewContact}
         />
       )}
