@@ -9,8 +9,6 @@ const getAllContacts = async (filterParams) => {
     url += `?${queryParams.toString()}`;
   }
 
-  //  contacts params seted for test,
-
   const response = await axios.get(url);
   const contacts = response.data.contacts;
   const formatedData = formatContactData(contacts);
@@ -22,7 +20,7 @@ const createContact = async (contactData) => {
   const logedInUserId = localStorage.getItem(LOCAL_STORAGE_KEYS.authUserData);
   try {
     const response = await axios.post("/contacts", {
-      user_id: logedInUserId.id ? logedInUserId.id : 1,
+      user_id: logedInUserId ? logedInUserId.id : 1,
       ...contactData,
     });
     return response.data;
