@@ -15,13 +15,12 @@ const onSortOptionChange = (value) => {
   console.log(value);
 };
 
-export function Contacts({ currentPage, contactsList }) {
-  console.log("contactsList", contactsList?.lenght);
+export function Contacts({ contactsData }) {
   return (
     <>
       <Flex justify="space-between" align="center">
         <label style={{ fontWeight: "bold", fontSize: "500" }}>
-          {contactsList?.length} contacts
+          {contactsData?.data.length} contacts
         </label>
         <Cascader
           options={sortOptions}
@@ -29,10 +28,7 @@ export function Contacts({ currentPage, contactsList }) {
           placeholder="Sort by"
         />
       </Flex>
-      <ContactList
-        contactsList={contactsList}
-        currentPage={currentPage}
-      ></ContactList>
+      <ContactList contactsData={contactsData}></ContactList>
     </>
   );
 }

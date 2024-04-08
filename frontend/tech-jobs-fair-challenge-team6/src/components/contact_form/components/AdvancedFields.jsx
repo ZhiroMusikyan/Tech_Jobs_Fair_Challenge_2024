@@ -5,16 +5,6 @@ const { TextArea } = Input;
 const AdvancedFields = () => {
   return (
     <>
-      <Form.Item
-        label="Email:"
-        name="email"
-        rules={[
-          { type: "email", message: "Please enter a valid email address." },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-
       <Form.Item label="Social:" name="social_media_url">
         <Input />
       </Form.Item>

@@ -4,7 +4,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Header } from "antd/es/layout/layout";
 import "./navbar.css";
 import { useNavigate } from "react-router-dom";
-import { ROUTS } from "../../constants/constants";
+import { LOCAL_STORAGE_KEYS, ROUTS } from "../../constants/constants";
 import NewContactForm from "../contact_form/NewContactForm";
 
 const Navbar = () => {
@@ -28,9 +28,10 @@ const Navbar = () => {
   };
 
   const handleLogOut = () => {
-    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.isAuth);
     navigate(ROUTS.logIn);
   };
+
   return (
     <Header
       style={{

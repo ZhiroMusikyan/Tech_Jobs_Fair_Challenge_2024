@@ -50,7 +50,22 @@ const BasicFields = () => {
       >
         <Input addonBefore={prefixSelector} style={{ width: "100%" }} />
       </Form.Item>
-
+      <Form.Item
+        label="Email:"
+        name="email"
+        rules={[
+          {
+            required: true,
+            message: "This field is required.",
+          },
+          {
+            type: "email",
+            message: "Please enter a valid email address.",
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
       <Form.Item
         name="type"
         label="Type:"

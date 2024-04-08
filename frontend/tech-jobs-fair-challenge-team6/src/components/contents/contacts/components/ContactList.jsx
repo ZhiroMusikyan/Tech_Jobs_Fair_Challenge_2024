@@ -2,13 +2,10 @@ import React, { useState } from "react";
 import { Avatar, List } from "antd";
 import ViewContactModal from "../../../modals/ViewContactModal";
 import EditContactForm from "../../../contact_form/EditContactForm";
-import { UserToForm } from "../../../../utils/user_to_form";
 
-export function ContactList({ contactsList, currentPage }) {
+export function ContactList({ contactsData }) {
   const [viewContact, setViewContact] = useState("");
   const [editData, setEditData] = useState("");
-  console.log(contactsList);
-
   const handleConfirm = () => {
     setEditData(undefined);
   };
@@ -21,7 +18,7 @@ export function ContactList({ contactsList, currentPage }) {
     <>
       <List
         pagination={{ position: "bottom", align: "end" }}
-        dataSource={contactsList}
+        dataSource={contactsData?.data}
         renderItem={(item, index) => (
           <List.Item
             onClick={() => setViewContact(item)}

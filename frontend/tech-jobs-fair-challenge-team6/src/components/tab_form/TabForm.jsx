@@ -43,7 +43,6 @@ const TabForm = ({
     form.resetFields();
     onCancel();
   };
-  console.log("contextHolder", contextHolder);
   return (
     <>
       {contextHolder}

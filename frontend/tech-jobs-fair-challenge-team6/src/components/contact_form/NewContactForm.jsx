@@ -5,34 +5,33 @@ import AdvancedFields from "./components/AdvancedFields";
 import { errorMessage, successMessage } from "./constants/messages";
 import TabForm from "../tab_form/TabForm";
 import { createContact } from "../../api/contacts";
+import { QUERY_KEYS } from "../../constants/constants";
 
 const NewContactForm = ({ open, onConfirm, onCancel }) => {
   const queryClient = useQueryClient();
-
+  const { mutate } = useMutation({
+    mutationFn: createContact,
+    onSuccess: () => {
+      console.log("onSuccess");
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.getAllContacts] });
+    },
+  });
   const items = [
     {
       key: "1",
       label: "Basic info",
-      children: <BasicFields></BasicFields>,
+      children: <BasicFields />,
     },
     {
       key: "2",
       label: "More info",
-      children: <AdvancedFields></AdvancedFields>,
+      children: <AdvancedFields />,
     },
   ];
 
-  const { mutate } = useMutation({
-    mutationFn: (e) => createContact(e),
-    onSuccess: () => {
-      console.log("onSuccess");
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["getContactsList"] });
-    },
-  });
   const handleConfirm = (value) => {
     onConfirm();
-    mutate({ ...value });
+    mutate(value);
   };
 
   return (

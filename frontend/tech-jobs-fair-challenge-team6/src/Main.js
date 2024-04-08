@@ -6,20 +6,16 @@ import Sidebar from "./components/sidebar/Sidebar";
 import { getAllContacts } from "./api/contacts";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { ROUTS } from "./constants/constants";
+import { LOCAL_STORAGE_KEYS, QUERY_KEYS, ROUTS } from "./constants/constants";
 const { Content } = Layout;
 
 function Main() {
-  const [filterParams, setFilterParams] = useState({});
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const [filterParams, setFilterParams] = useState({ page: 1 });
+  const isLoggedIn = localStorage.getItem(LOCAL_STORAGE_KEYS.isAuth);
   const { isLoading, error, data } = useQuery({
-    queryKey: ["getContactsList"],
+    queryKey: [QUERY_KEYS.getAllContacts],
     queryFn: () => getAllContacts(filterParams),
   });
-
-  //   console.log("isLoading", isLoading);
-  //   console.log("error", error);
-  // console.log("data", data);
 
   const handleFilterParamsChange = (checkedValues, key) => {
     setFilterParams((prevState) => ({ ...prevState, [key]: checkedValues }));
@@ -52,10 +48,7 @@ function Main() {
                   borderRadius: "20px",
                 }}
               >
-                <Contacts
-                  currentPage={data?.current_page}
-                  contactsList={data?.data}
-                ></Contacts>
+                <Contacts contactsData={data}></Contacts>
               </Content>
             </Layout>
           </Layout>
