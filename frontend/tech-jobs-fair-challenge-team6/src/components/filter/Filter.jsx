@@ -18,7 +18,7 @@ const datar = {
   ],
 };
 
-const Filter = (handleChange) => {
+const Filter = ({ handleFilterParamsChange }) => {
   return (
     <div>
       {Object.entries(datar).map(([key, options]) => (
@@ -30,7 +30,9 @@ const Filter = (handleChange) => {
               display: "flex",
               flexDirection: "column",
             }}
-            onChange={(checkedValues) => handleChange(checkedValues, key)}
+            onChange={(checkedValues) =>
+              handleFilterParamsChange(checkedValues, key)
+            }
             options={options}
           />
         </div>

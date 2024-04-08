@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Layout } from "antd";
 import Navbar from "./components/header/Navbar";
 import { Contacts } from "./components/contents/contacts/Contacts";
@@ -6,34 +6,38 @@ import Sidebar from "./components/sidebar/Sidebar";
 import { getAllContacts } from "./api/contacts";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { ROUTS } from "./constants/constants";
+import { LOCAL_STORAGE_KEYS, QUERY_KEYS, ROUTS } from "./constants/constants";
 const { Content } = Layout;
 
 function Main() {
-  const [filterParams, setFilterParams] = useState({});
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["getContactsList"],
+  const [filterParams, setFilterParams] = useState({ page: 1 });
+  const isLoggedIn = localStorage.getItem(LOCAL_STORAGE_KEYS.isAuth);
+  const { isLoading, error, data, refetch } = useQuery({
+    queryKey: [QUERY_KEYS.getAllContacts],
     queryFn: () => getAllContacts(filterParams),
   });
 
-  //   console.log("isLoading", isLoading);
-  //   console.log("error", error);
-  // console.log("data", data);
-
-  const handleFilterParamsChange = (checkedValues, key) => {
-    setFilterParams((prevState) => ({ ...prevState, [key]: checkedValues }));
-  };
   const navigate = useNavigate();
   if (!isLoggedIn) {
     navigate(ROUTS.logIn);
   }
 
+  const handleFilterParamsChange = (checkedValues, key) => {
+    setFilterParams((prevState) => ({ ...prevState, [key]: checkedValues }));
+  };
+
+  const handleFilterParam = (param) => {
+    setFilterParams((prevState) => ({ ...prevState, ...param }));
+  };
+
+  useEffect(() => {
+    refetch();
+  }, [filterParams]);
   return (
     <>
       {isLoggedIn ? (
         <Layout style={{ height: "100%" }}>
-          <Navbar />
+          <Navbar handleSearch={handleFilterParam} />
           <Layout>
             <Sidebar handleFilterParamsChange={handleFilterParamsChange} />
             <Layout
@@ -54,8 +58,8 @@ function Main() {
                 }}
               >
                 <Contacts
-                  currentPage={data?.current_page}
-                  contactsList={data?.data}
+                  contactsData={data}
+                  handleFilterParam={handleFilterParam}
                 ></Contacts>
               </Content>
             </Layout>

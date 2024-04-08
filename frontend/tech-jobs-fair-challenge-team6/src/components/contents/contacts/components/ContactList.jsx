@@ -2,18 +2,40 @@ import React, { useState } from "react";
 import { Avatar, List } from "antd";
 import EditContactForm from "../../../contact_form/EditContactForm";
 import ViewContactModal2 from "../../../modals/ViewContactModal2";
+import { Button } from "antd";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEYS } from "../../../../constants/constants";
+import ConfirationModal from "../../../modals/ConfirationModal";
+import { deleteContact } from "../../../../api/contacts";
 
-export function ContactList({ contactsList, currentPage }) {
+export function ContactList({ contactsData, handleFilterParam }) {
   const [viewContact, setViewContact] = useState("");
   const [editData, setEditData] = useState("");
-  console.log(contactsList);
+  const [deleteSelectedContact, setDeleteSelectedContact] = useState("");
+  const queryClient = useQueryClient();
 
+  const { mutate } = useMutation({
+    mutationFn: deleteContact,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.getAllContacts] });
+    },
+  });
   const handleConfirm = () => {
     setEditData(undefined);
   };
 
   const handleCancel = () => {
     setEditData("");
+  };
+  const handlePageChange = (value) => {
+    handleFilterParam({ page: value });
+  };
+  const handleDelete = () => {
+    mutate(deleteSelectedContact.id);
+    setDeleteSelectedContact("");
+  };
+  const handleCancelDelete = () => {
+    setDeleteSelectedContact("");
   };
 
   return (
@@ -26,24 +48,39 @@ export function ContactList({ contactsList, currentPage }) {
       }}
     >
       <List
-        dataSource={contactsList}
+        pagination={{
+          position: "bottom",
+          align: "end",
+          onChange: handlePageChange,
+          pageSize: 10,
+          total: contactsData?.total,
+        }}
+        dataSource={contactsData?.data}
         renderItem={(item, index) => (
           <List.Item
             onClick={() => setViewContact(item)}
             actions={[
-              <a key="list-delete" href="#delete">
-                Delete
-              </a>,
-              <a
-                key="list-edit"
-                href="#edit"
+              <Button
                 onClick={(e) => {
                   e.stopPropagation();
                   setEditData(item);
                 }}
+                type="link"
+                block
               >
                 Edit
-              </a>,
+              </Button>,
+              <Button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDeleteSelectedContact(item);
+                }}
+                danger
+                type="text"
+                block
+              >
+                Delete
+              </Button>,
             ]}
           >
             <List.Item.Meta
@@ -69,6 +106,15 @@ export function ContactList({ contactsList, currentPage }) {
           data={editData}
           onConfirm={handleConfirm}
           onCancel={handleCancel}
+        />
+      )}
+      {deleteSelectedContact && (
+        <ConfirationModal
+          handleOk={handleDelete}
+          handleCancel={handleCancelDelete}
+          title={`Do you Want to delete ${deleteContact.name} contact?`}
+          okText="Yes"
+          cancelText="No"
         />
       )}
     </div>

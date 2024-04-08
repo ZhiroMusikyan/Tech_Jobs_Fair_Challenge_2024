@@ -1,37 +1,27 @@
+import { LOCAL_STORAGE_KEYS } from "../constants/constants";
 import axios from "./axios";
+import { formatContactData } from "./contact.utils";
 
 const getAllContacts = async (filterParams) => {
-  let url;
+  let url = "/contacts";
   if (filterParams) {
     const queryParams = new URLSearchParams(filterParams);
     url += `?${queryParams.toString()}`;
   }
-  //  contacts params seted for test,
-  const response = await axios.get("/contacts");
-  return response.data.contacts;
+  const response = await axios.get(url);
+  const contacts = response.data.contacts;
+  const formatedData = formatContactData(contacts);
+
+  return formatedData;
 };
 
 const createContact = async (contactData) => {
+  const logedInUserId = localStorage.getItem(LOCAL_STORAGE_KEYS.authUserData);
   try {
-    const d = contactData;
-    d.user_id = 1;
-    debugger;
-    console.log("createContact", d);
-    const response = await axios.post(
-      "/contacts",
-      JSON.stringify({
-        profile_picture: "asdd",
-        name: "asd",
-        surname: "qwer",
-        email: "qwerled@mail.ru",
-        number: "1233753231",
-        user_id: 1,
-        social_media_url: "Qwer",
-        date_of_birth: "1982-09-01",
-        type_id: "qwer",
-        note: "qwrt",
-      })
-    );
+    const response = await axios.post("/contacts", {
+      user_id: logedInUserId ? logedInUserId.id : 1,
+      ...contactData,
+    });
     return response.data;
   } catch (error) {
     throw error;

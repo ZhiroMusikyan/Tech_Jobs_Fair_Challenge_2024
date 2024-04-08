@@ -35,7 +35,6 @@ const TabForm = ({
     onConfirm(values);
   };
   const onFinishFailed = (errorInfo) => {
-    console.log(errorInfo);
     showErrorMsg();
   };
 
@@ -43,7 +42,6 @@ const TabForm = ({
     form.resetFields();
     onCancel();
   };
-  console.log("contextHolder", contextHolder);
   return (
     <>
       {contextHolder}
