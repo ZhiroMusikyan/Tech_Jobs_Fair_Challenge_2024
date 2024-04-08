@@ -81,9 +81,9 @@
             // Validate the request
             $validator = Validator::make($request->all(), $rules);
             // Check if validation fails
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 422);
-            }
+//            if ($validator->fails()) {
+//                return response()->json(['errors' => $validator->errors()], 422);
+//            }
             $validatedData = $validator->validated();
             // Create new contact and associate it with the authenticated user
             $user = User::findOrFail($validatedData['user_id']);
@@ -119,9 +119,9 @@
             ]);
 
             // Check if validation fails
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 422);
-            }
+//            if ($validator->fails()) {
+//                return response()->json(['errors' => $validator->errors()], 422);
+//            }
 
             // Get validated data
             $validatedData = $validator->validated();
