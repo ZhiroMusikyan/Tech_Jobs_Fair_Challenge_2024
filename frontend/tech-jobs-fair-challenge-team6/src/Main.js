@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Layout } from "antd";
 import Navbar from "./components/header/Navbar";
 import { Contacts } from "./components/contents/contacts/Contacts";
@@ -12,7 +12,7 @@ const { Content } = Layout;
 function Main() {
   const [filterParams, setFilterParams] = useState({ page: 1 });
   const isLoggedIn = localStorage.getItem(LOCAL_STORAGE_KEYS.isAuth);
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, error, data, refetch } = useQuery({
     queryKey: [QUERY_KEYS.getAllContacts],
     queryFn: () => getAllContacts(filterParams),
   });
@@ -25,6 +25,13 @@ function Main() {
     navigate(ROUTS.logIn);
   }
 
+  const handleFilterParam = (param) => {
+    setFilterParams((prevState) => ({ ...prevState, ...param }));
+  };
+
+  useEffect(() => {
+    refetch();
+  }, [filterParams]);
   return (
     <>
       {isLoggedIn ? (
@@ -46,9 +53,13 @@ function Main() {
                   minHeight: 280,
                   background: "white",
                   borderRadius: "20px",
+                  overflowY: "hidden",
                 }}
               >
-                <Contacts contactsData={data}></Contacts>
+                <Contacts
+                  contactsData={data}
+                  handleFilterParam={handleFilterParam}
+                ></Contacts>
               </Content>
             </Layout>
           </Layout>

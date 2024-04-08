@@ -15,7 +15,7 @@ const onSortOptionChange = (value) => {
   console.log(value);
 };
 
-export function Contacts({ contactsData }) {
+export function Contacts({ contactsData, handleFilterParam }) {
   return (
     <>
       <Flex justify="space-between" align="center">
@@ -28,7 +28,10 @@ export function Contacts({ contactsData }) {
           placeholder="Sort by"
         />
       </Flex>
-      <ContactList contactsData={contactsData}></ContactList>
+      <ContactList
+        contactsData={contactsData}
+        handleFilterParam={handleFilterParam}
+      ></ContactList>
     </>
   );
 }

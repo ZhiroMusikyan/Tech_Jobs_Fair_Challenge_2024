@@ -19,7 +19,6 @@ const getAllContacts = async (filterParams) => {
 };
 
 const createContact = async (contactData) => {
-  console.log("inside of create contact func", contactData);
   const logedInUserId = localStorage.getItem(LOCAL_STORAGE_KEYS.authUserData);
   try {
     const response = await axios.post("/contacts", {

@@ -3,7 +3,7 @@ import { Avatar, List } from "antd";
 import ViewContactModal from "../../../modals/ViewContactModal";
 import EditContactForm from "../../../contact_form/EditContactForm";
 
-export function ContactList({ contactsData }) {
+export function ContactList({ contactsData, handleFilterParam }) {
   const [viewContact, setViewContact] = useState("");
   const [editData, setEditData] = useState("");
   const handleConfirm = () => {
@@ -13,11 +13,27 @@ export function ContactList({ contactsData }) {
   const handleCancel = () => {
     setEditData("");
   };
-
+  const handlePageChange = (value) => {
+    handleFilterParam({ page: value });
+  };
+  console.log(contactsData);
   return (
-    <>
+    <div
+      style={{
+        height: "90%",
+        marginTop: "20px",
+        paddingRight: "5px",
+        overflowY: "scroll",
+      }}
+    >
       <List
-        pagination={{ position: "bottom", align: "end" }}
+        pagination={{
+          position: "bottom",
+          align: "end",
+          onChange: handlePageChange,
+          pageSize: 10,
+          total: contactsData?.total,
+        }}
         dataSource={contactsData?.data}
         renderItem={(item, index) => (
           <List.Item
@@ -64,6 +80,6 @@ export function ContactList({ contactsData }) {
           onCancel={handleCancel}
         />
       )}
-    </>
+    </div>
   );
 }
