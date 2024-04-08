@@ -50,6 +50,7 @@ function Main() {
                   minHeight: 280,
                   background: "white",
                   borderRadius: "20px",
+                  overflowY: "hidden",
                 }}
               >
                 <Contacts

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Avatar, List } from "antd";
 import ViewContactModal from "../../../modals/ViewContactModal";
 import EditContactForm from "../../../contact_form/EditContactForm";
-import { UserToForm } from "../../../../utils/user_to_form";
 
 export function ContactList({ contactsList, currentPage }) {
   const [viewContact, setViewContact] = useState("");
@@ -18,9 +17,15 @@ export function ContactList({ contactsList, currentPage }) {
   };
 
   return (
-    <>
+    <div
+      style={{
+        height: "90%",
+        marginTop: "20px",
+        paddingRight: "5px",
+        overflowY: "scroll",
+      }}
+    >
       <List
-        pagination={{ position: "bottom", align: "end" }}
         dataSource={contactsList}
         renderItem={(item, index) => (
           <List.Item
@@ -67,6 +72,6 @@ export function ContactList({ contactsList, currentPage }) {
           onCancel={handleCancel}
         />
       )}
-    </>
+    </div>
   );
 }
