@@ -14,8 +14,7 @@ const Navbar = () => {
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const handleOk = (e) => {
-    console.log("EE is ", e);
+  const handleOk = () => {
     setIsModalOpen(false);
   };
   const handleCancel = () => {

@@ -12,7 +12,6 @@ const NewContactForm = ({ open, onConfirm, onCancel }) => {
   const { mutate } = useMutation({
     mutationFn: createContact,
     onSuccess: () => {
-      console.log("onSuccess");
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.getAllContacts] });
     },
   });

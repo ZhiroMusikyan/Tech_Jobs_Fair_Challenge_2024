@@ -35,7 +35,6 @@ const TabForm = ({
     onConfirm(values);
   };
   const onFinishFailed = (errorInfo) => {
-    console.log(errorInfo);
     showErrorMsg();
   };
 

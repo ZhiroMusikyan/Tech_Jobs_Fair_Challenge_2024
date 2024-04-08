@@ -36,7 +36,7 @@ export function ContactList({ contactsData, handleFilterParam }) {
   const handleCancelDelete = () => {
     setDeleteSelectedContact("");
   };
-  console.log(contactsData);
+
   return (
     <div
       style={{
