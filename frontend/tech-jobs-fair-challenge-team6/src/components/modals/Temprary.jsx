@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "antd";
 
-const ConfirationModal = ({ handleOk, handleCancel, title, ...rest }) => {
+const Temprary = ({ handleOk, handleCancel, title, ...rest }) => {
   return (
     <Modal
       okButtonProps={{ danger: true }}
@@ -14,4 +14,4 @@ const ConfirationModal = ({ handleOk, handleCancel, title, ...rest }) => {
     />
   );
 };
-export default ConfirationModal;
+export default Temprary;

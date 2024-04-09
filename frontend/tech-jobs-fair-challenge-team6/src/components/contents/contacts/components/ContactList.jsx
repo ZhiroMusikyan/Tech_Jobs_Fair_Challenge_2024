@@ -7,7 +7,7 @@ import {
 } from "../../../../constants/constants";
 import ViewContactModal2 from "../../../modals/ViewContactModal2";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import ConfirationModal from "../../../modals/ConfirationModal";
+import ConfirationModal from "../../../modals/Temprary";
 import { deleteContact } from "../../../../api/contacts";
 
 export function ContactList({ contactsData, handleFilterParam }) {
