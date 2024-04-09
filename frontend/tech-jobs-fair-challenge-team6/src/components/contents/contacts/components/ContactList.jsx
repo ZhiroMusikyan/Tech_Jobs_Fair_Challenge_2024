@@ -3,7 +3,10 @@ import { Avatar, List, Button } from "antd";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ViewContactModal from "../../../modals/ViewContactModal";
 import EditContactForm from "../../../contact_form/EditContactForm";
-import { QUERY_KEYS } from "../../../../constants/constants";
+import {
+  LOCAL_STORAGE_KEYS,
+  QUERY_KEYS,
+} from "../../../../constants/constants";
 import ConfirationModal from "../../../modals/ConfirationModal";
 import { deleteContact } from "../../../../api/contacts";
 
@@ -27,6 +30,7 @@ export function ContactList({ contactsData, handleFilterParam }) {
     setEditData("");
   };
   const handlePageChange = (value) => {
+    localStorage.setItem(LOCAL_STORAGE_KEYS.page, value);
     handleFilterParam({ page: value });
   };
   const handleDelete = () => {
@@ -49,6 +53,7 @@ export function ContactList({ contactsData, handleFilterParam }) {
       <List
         pagination={{
           position: "bottom",
+          current: contactsData?.curentPage,
           align: "end",
           onChange: handlePageChange,
           pageSize: 10,

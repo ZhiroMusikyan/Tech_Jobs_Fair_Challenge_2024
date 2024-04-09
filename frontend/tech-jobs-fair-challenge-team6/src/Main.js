@@ -10,7 +10,8 @@ import { LOCAL_STORAGE_KEYS, QUERY_KEYS, ROUTS } from "./constants/constants";
 const { Content } = Layout;
 
 function Main() {
-  const [filterParams, setFilterParams] = useState({ page: 1 });
+  const currentPage = localStorage.getItem(LOCAL_STORAGE_KEYS.page);
+  const [filterParams, setFilterParams] = useState({ page: currentPage });
   const isLoggedIn = localStorage.getItem(LOCAL_STORAGE_KEYS.isAuth);
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: [QUERY_KEYS.getAllContacts],
@@ -29,15 +30,19 @@ function Main() {
   const handleFilterParam = (param) => {
     setFilterParams((prevState) => ({ ...prevState, ...param }));
   };
+  const handleSearch = (search) => {
+    setFilterParams((prevState) => ({ ...prevState, ...search, page: 1 }));
+  };
 
   useEffect(() => {
     refetch();
   }, [filterParams]);
+
   return (
     <>
       {isLoggedIn ? (
         <Layout style={{ height: "100%" }}>
-          <Navbar handleSearch={handleFilterParam} />
+          <Navbar handleSearch={handleSearch} />
           <Layout>
             <Sidebar handleFilterParamsChange={handleFilterParamsChange} />
             <Layout
