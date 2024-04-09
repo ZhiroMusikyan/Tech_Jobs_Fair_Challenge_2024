@@ -5,11 +5,11 @@ const { TextArea } = Input;
 const AdvancedFields = () => {
   return (
     <>
-      <Form.Item label="Social:" name="social_media_url">
+      <Form.Item label="Social:" name="socialMediaURL">
         <Input />
       </Form.Item>
 
-      <Form.Item label="Birth date:" name="birthDate">
+      <Form.Item label="Birth date:" name="dateOfBirth">
         <DatePicker style={{ width: "100%" }} />
       </Form.Item>
 

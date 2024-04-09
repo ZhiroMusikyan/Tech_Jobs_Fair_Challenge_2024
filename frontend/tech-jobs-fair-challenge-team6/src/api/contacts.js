@@ -1,19 +1,31 @@
 import { CONTACTS_PATH, LOCAL_STORAGE_KEYS } from "../constants/constants";
 import axios from "./axios";
 import {
+  TRES,
   convertContactDataIntoBackEndType,
   formatContactData,
+  t,
 } from "./contact.utils";
 
 const getAllContacts = async (filterParams) => {
   let url = CONTACTS_PATH;
   if (filterParams) {
+    // const newObj = {
+    //   ...filterParams,
+    // };
+    // if (filterParams.department) {
+    //   newObj.department_ids = JSON.stringify(filterParams.department);
+    //   delete newObj.department;
+    // }
+
     const queryParams = new URLSearchParams(filterParams);
     url += `?${queryParams.toString()}`;
   }
   const response = await axios.get(url);
   const contacts = response.data.contacts;
-  const formatedData = formatContactData(contacts);
+  const tr = TRES;
+  // debugger;
+  const formatedData = formatContactData(tr);
 
   return formatedData;
 };
