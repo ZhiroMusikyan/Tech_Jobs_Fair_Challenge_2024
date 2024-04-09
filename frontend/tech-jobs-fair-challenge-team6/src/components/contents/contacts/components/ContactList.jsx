@@ -7,7 +7,7 @@ import {
 } from "../../../../constants/constants";
 import ViewContactModal2 from "../../../modals/ViewContactModal2";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import ConfirationModal from "../../../modals/Temprary";
+import ConfirmationModal from "../../../modals/ConfirmationModal";
 import { deleteContact } from "../../../../api/contacts";
 
 export function ContactList({ contactsData, handleFilterParam }) {
@@ -114,10 +114,12 @@ export function ContactList({ contactsData, handleFilterParam }) {
         />
       )}
       {deleteSelectedContact && (
-        <ConfirationModal
+        <ConfirmationModal
           handleOk={handleDelete}
           handleCancel={handleCancelDelete}
-          title={`Do you Want to delete ${deleteContact.name} contact?`}
+          title={`Do you Want to delete 
+          "${deleteSelectedContact.name} ${deleteSelectedContact.surname}"
+           contact?`}
           okText="Yes"
           cancelText="No"
         />
