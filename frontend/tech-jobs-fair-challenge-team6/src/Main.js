@@ -11,7 +11,11 @@ const { Content } = Layout;
 
 function Main() {
   const currentPage = localStorage.getItem(LOCAL_STORAGE_KEYS.page);
-  const [filterParams, setFilterParams] = useState({ page: currentPage });
+  const currentSort = localStorage.getItem(LOCAL_STORAGE_KEYS.sort);
+  const [filterParams, setFilterParams] = useState({
+    page: currentPage,
+    sort: currentSort,
+  });
   const isLoggedIn = localStorage.getItem(LOCAL_STORAGE_KEYS.isAuth);
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: [QUERY_KEYS.getAllContacts],
@@ -23,14 +27,14 @@ function Main() {
     navigate(ROUTS.logIn);
   }
 
-  const handleFilterParamsChange = (checkedValues, key) => {
+  const handleOnFilterParamsChange = (checkedValues, key) => {
     setFilterParams((prevState) => ({ ...prevState, [key]: checkedValues }));
   };
 
-  const handleFilterParam = (param) => {
+  const handleOnPageChange = (param) => {
     setFilterParams((prevState) => ({ ...prevState, ...param }));
   };
-  const handleSearch = (search) => {
+  const handleOnSearchSort = (search) => {
     setFilterParams((prevState) => ({ ...prevState, ...search, page: 1 }));
   };
 
@@ -42,9 +46,9 @@ function Main() {
     <>
       {isLoggedIn ? (
         <Layout style={{ height: "100%" }}>
-          <Navbar handleSearch={handleSearch} />
+          <Navbar handleOnSearch={handleOnSearchSort} />
           <Layout>
-            <Sidebar handleFilterParamsChange={handleFilterParamsChange} />
+            <Sidebar handleOnFilterParamsChange={handleOnFilterParamsChange} />
             <Layout
               style={{
                 padding: "24px 24px",
@@ -64,7 +68,8 @@ function Main() {
               >
                 <Contacts
                   contactsData={data}
-                  handleFilterParam={handleFilterParam}
+                  handleOnSort={handleOnSearchSort}
+                  handleOnPageChange={handleOnPageChange}
                 ></Contacts>
               </Content>
             </Layout>

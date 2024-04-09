@@ -10,7 +10,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ConfirmationModal from "../../../modals/ConfirmationModal";
 import { deleteContact } from "../../../../api/contacts";
 
-export function ContactList({ contactsData, handleFilterParam }) {
+export function ContactList({ contactsData, handleOnPageChange }) {
   const [viewContact, setViewContact] = useState("");
   const [editData, setEditData] = useState("");
   const [deleteSelectedContact, setDeleteSelectedContact] = useState("");
@@ -31,7 +31,7 @@ export function ContactList({ contactsData, handleFilterParam }) {
   };
   const handlePageChange = (value) => {
     localStorage.setItem(LOCAL_STORAGE_KEYS.page, value);
-    handleFilterParam({ page: value });
+    handleOnPageChange({ page: value });
   };
   const handleDelete = () => {
     mutate(deleteSelectedContact.id);

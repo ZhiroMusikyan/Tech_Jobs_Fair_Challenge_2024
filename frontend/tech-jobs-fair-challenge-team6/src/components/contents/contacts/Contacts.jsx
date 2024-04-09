@@ -1,3 +1,4 @@
+import { LOCAL_STORAGE_KEYS } from "../../../constants/constants";
 import { ContactList } from "./components/ContactList";
 import { Flex, Cascader } from "antd";
 
@@ -11,11 +12,12 @@ const sortOptions = [
     label: "Sorty by surname",
   },
 ];
-const onSortOptionChange = (value) => {
-  console.log(value);
-};
 
-export function Contacts({ contactsData, handleFilterParam }) {
+export function Contacts({ contactsData, handleOnSort, handleOnPageChange }) {
+  const onSortOptionChange = (value) => {
+    localStorage.setItem(LOCAL_STORAGE_KEYS.sort, value);
+    handleOnSort({ sort: value });
+  };
   return (
     <>
       <Flex justify="space-between" align="center">
@@ -23,14 +25,16 @@ export function Contacts({ contactsData, handleFilterParam }) {
           {contactsData?.data.length} contacts
         </label>
         <Cascader
+          allowClear={false}
           options={sortOptions}
+          defaultValue={"name"}
           onChange={onSortOptionChange}
           placeholder="Sort by"
         />
       </Flex>
       <ContactList
         contactsData={contactsData}
-        handleFilterParam={handleFilterParam}
+        handleOnPageChange={handleOnPageChange}
       ></ContactList>
     </>
   );

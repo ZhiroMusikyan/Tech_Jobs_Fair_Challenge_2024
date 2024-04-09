@@ -8,10 +8,10 @@ import { LOCAL_STORAGE_KEYS, ROUTS } from "../../constants/constants";
 import NewContactForm from "../contact_form/NewContactForm";
 import { debounce } from "lodash";
 
-const Navbar = ({ handleSearch }) => {
+const Navbar = ({ handleOnSearch }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-  const debouncedHandleSearch = useCallback(debounce(handleSearch, 700), []);
+  const debouncedHandleSearch = useCallback(debounce(handleOnSearch, 700), []);
 
   const showModal = () => {
     setIsModalOpen(true);

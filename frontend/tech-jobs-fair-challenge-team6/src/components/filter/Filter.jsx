@@ -4,7 +4,7 @@ import { FILTER_PARAMS } from "../../constants/constants";
 
 const { Title } = Typography;
 
-const Filter = ({ handleFilterParamsChange }) => {
+const Filter = ({ handleOnFilterParamsChange }) => {
   return (
     <div>
       {Object.entries(FILTER_PARAMS).map(([key, options]) => (
@@ -17,7 +17,7 @@ const Filter = ({ handleFilterParamsChange }) => {
               flexDirection: "column",
             }}
             onChange={(checkedValues) =>
-              handleFilterParamsChange(checkedValues, key)
+              handleOnFilterParamsChange(checkedValues, key)
             }
             options={options}
           />
