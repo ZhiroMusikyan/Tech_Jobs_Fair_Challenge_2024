@@ -22,7 +22,7 @@ const convertContactDataIntoFrontEndType = (data) => {
       surname: item.surname,
       type: item.type_id,
       userId: item.user_id,
-      department: item.department_id,
+      department: item.department_id?.toString(),
     };
   });
   return convertedContactData;

@@ -11,10 +11,10 @@ export const LOCAL_STORAGE_KEYS = {
 };
 export const FILTER_PARAMS = {
   department: [
-    { label: "IT", value: 0 },
-    { label: "HR", value: 1 },
-    { label: "Finance", value: 2 },
-    { label: "Suport", value: 3 },
+    { label: "IT", value: "0" },
+    { label: "HR", value: "1" },
+    { label: "Finance", value: "2" },
+    { label: "Suport", value: "3" },
   ],
   contactType: [
     { label: "Internal", value: "0" },

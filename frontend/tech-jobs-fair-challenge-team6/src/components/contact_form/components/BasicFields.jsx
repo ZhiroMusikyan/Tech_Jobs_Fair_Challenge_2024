@@ -6,7 +6,7 @@ const { Option } = Select;
 
 const BasicFields = ({ data }) => {
   const [isInternal, setIsInternal] = useState(
-    data.type === FILTER_PARAMS.contactType[0].value
+    data?.type === FILTER_PARAMS.contactType[0].value
   );
 
   const handleTypeChange = (value) => {
