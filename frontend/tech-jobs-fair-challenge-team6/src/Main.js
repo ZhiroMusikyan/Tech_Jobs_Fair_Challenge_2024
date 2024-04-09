@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Layout } from "antd";
 import Navbar from "./components/header/Navbar";
 import { Contacts } from "./components/contents/contacts/Contacts";
@@ -6,36 +6,52 @@ import Sidebar from "./components/sidebar/Sidebar";
 import { getAllContacts } from "./api/contacts";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { ROUTS } from "./constants/constants";
+import { LOCAL_STORAGE_KEYS, QUERY_KEYS, ROUTS } from "./constants/constants";
 const { Content } = Layout;
 
 function Main() {
-  const [filterParams, setFilterParams] = useState({});
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["getContactsList"],
+  const currentPage = localStorage.getItem(LOCAL_STORAGE_KEYS.page);
+  const sortName = localStorage.getItem(LOCAL_STORAGE_KEYS.sortName);
+  const sortDirection = localStorage.getItem(LOCAL_STORAGE_KEYS.sortDirection);
+
+  const [filterParams, setFilterParams] = useState({
+    page: currentPage,
+    sort: sortName,
+    diraction: sortDirection,
+  });
+  const isLoggedIn = localStorage.getItem(LOCAL_STORAGE_KEYS.isAuth);
+  const { isLoading, error, data, refetch } = useQuery({
+    queryKey: [QUERY_KEYS.getAllContacts],
     queryFn: () => getAllContacts(filterParams),
   });
 
-  //   console.log("isLoading", isLoading);
-  //   console.log("error", error);
-  // console.log("data", data);
-
-  const handleFilterParamsChange = (checkedValues, key) => {
-    setFilterParams((prevState) => ({ ...prevState, [key]: checkedValues }));
-  };
   const navigate = useNavigate();
   if (!isLoggedIn) {
     navigate(ROUTS.logIn);
   }
 
+  const handleOnFilterParamsChange = (checkedValues, key) => {
+    setFilterParams((prevState) => ({ ...prevState, [key]: checkedValues }));
+  };
+
+  const handleOnPageChange = (param) => {
+    setFilterParams((prevState) => ({ ...prevState, ...param }));
+  };
+  const handleOnSearchSort = (search) => {
+    setFilterParams((prevState) => ({ ...prevState, ...search, page: 1 }));
+  };
+
+  useEffect(() => {
+    refetch();
+  }, [filterParams]);
+
   return (
     <>
       {isLoggedIn ? (
         <Layout style={{ height: "100%" }}>
-          <Navbar />
+          <Navbar handleOnSearch={handleOnSearchSort} />
           <Layout>
-            <Sidebar handleFilterParamsChange={handleFilterParamsChange} />
+            <Sidebar handleOnFilterParamsChange={handleOnFilterParamsChange} />
             <Layout
               style={{
                 padding: "24px 24px",
@@ -50,11 +66,13 @@ function Main() {
                   minHeight: 280,
                   background: "white",
                   borderRadius: "20px",
+                  overflowY: "hidden",
                 }}
               >
                 <Contacts
-                  currentPage={data?.current_page}
-                  contactsList={data?.data}
+                  contactsData={data}
+                  handleOnSort={handleOnSearchSort}
+                  handleOnPageChange={handleOnPageChange}
                 ></Contacts>
               </Content>
             </Layout>

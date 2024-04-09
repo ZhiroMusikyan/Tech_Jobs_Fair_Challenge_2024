@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Button, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { Header } from "antd/es/layout/layout";
 import "./navbar.css";
 import { useNavigate } from "react-router-dom";
-import { ROUTS } from "../../constants/constants";
+import { LOCAL_STORAGE_KEYS, ROUTS } from "../../constants/constants";
 import NewContactForm from "../contact_form/NewContactForm";
+import { debounce } from "lodash";
 
-const Navbar = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+const Navbar = ({ handleOnSearch }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+  const debouncedHandleSearch = useCallback(debounce(handleOnSearch, 700), []);
+
   const showModal = () => {
     setIsModalOpen(true);
   };
+
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -21,15 +24,11 @@ const Navbar = () => {
     setIsModalOpen(false);
   };
 
-  const handleSearchChange = (e) => {
-    const { value } = e.target;
-    setSearchQuery(value);
-  };
-
   const handleLogOut = () => {
-    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.isAuth);
     navigate(ROUTS.logIn);
   };
+
   return (
     <Header
       style={{
@@ -44,10 +43,9 @@ const Navbar = () => {
       <div className="navbar-logo">TechSolutions </div>
       <div className="search-box">
         <Input
-          value={searchQuery}
           style={{ width: 304 }}
           allowClear
-          onChange={handleSearchChange}
+          onChange={(e) => debouncedHandleSearch({ search: e.target.value })}
           placeholder="Search"
           prefix={<SearchOutlined />}
         />

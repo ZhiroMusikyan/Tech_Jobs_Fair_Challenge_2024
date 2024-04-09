@@ -1,37 +1,56 @@
+import { LOCAL_STORAGE_KEYS } from "../../../constants/constants";
 import { ContactList } from "./components/ContactList";
 import { Flex, Cascader } from "antd";
-
+const children = [
+  {
+    value: "asc",
+    label: "A to Z",
+  },
+  {
+    value: "desc",
+    label: "Z to A",
+  },
+];
 const sortOptions = [
   {
     value: "name",
     label: "Sorty by name",
+    children: children,
   },
   {
     value: "surname",
     label: "Sorty by surname",
+    children: children,
   },
 ];
-const onSortOptionChange = (value) => {
-  console.log(value);
-};
 
-export function Contacts({ currentPage, contactsList }) {
-  console.log("contactsList", contactsList?.lenght);
+export function Contacts({ contactsData, handleOnSort, handleOnPageChange }) {
+  const onSortOptionChange = (value) => {
+    const sortParams = {
+      sort: value[0],
+      direction: value[1],
+    };
+    localStorage.setItem(LOCAL_STORAGE_KEYS.sortName, value[0]);
+    localStorage.setItem(LOCAL_STORAGE_KEYS.sortDirection, value[1]);
+    handleOnSort(sortParams);
+  };
   return (
     <>
       <Flex justify="space-between" align="center">
         <label style={{ fontWeight: "bold", fontSize: "500" }}>
-          {contactsList?.length} contacts
+          {contactsData?.data.length} contacts
         </label>
         <Cascader
+          allowClear={false}
           options={sortOptions}
+          defaultValue={["name", "asc"]}
           onChange={onSortOptionChange}
           placeholder="Sort by"
         />
       </Flex>
       <ContactList
-        contactsList={contactsList}
-        currentPage={currentPage}
+        contactsData={contactsData}
+        handleOnPageChange={handleOnPageChange}
       ></ContactList>
     </>
   );

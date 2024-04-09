@@ -2,12 +2,12 @@ import React from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
-import { ROUTS } from "../../constants/constants";
+import { LOCAL_STORAGE_KEYS, ROUTS } from "../../constants/constants";
 
 const Auth = () => {
   const navigate = useNavigate();
   const onFinish = (values) => {
-    localStorage.setItem("isLoggedIn", true);
+    localStorage.setItem(LOCAL_STORAGE_KEYS.isAuth, true);
     navigate(ROUTS.contacts);
   };
   return (

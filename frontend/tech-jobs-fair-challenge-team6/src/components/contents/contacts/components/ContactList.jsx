@@ -1,14 +1,27 @@
 import React, { useState } from "react";
-import { Avatar, List } from "antd";
-import ViewContactModal from "../../../modals/ViewContactModal";
+import { Avatar, List, Button } from "antd";
 import EditContactForm from "../../../contact_form/EditContactForm";
-import { UserToForm } from "../../../../utils/user_to_form";
+import {
+  LOCAL_STORAGE_KEYS,
+  QUERY_KEYS,
+} from "../../../../constants/constants";
+import ViewContactModal2 from "../../../modals/ViewContactModal2";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import ConfirmationModal from "../../../modals/ConfirmationModal";
+import { deleteContact } from "../../../../api/contacts";
 
-export function ContactList({ contactsList, currentPage }) {
+export function ContactList({ contactsData, handleOnPageChange }) {
   const [viewContact, setViewContact] = useState("");
   const [editData, setEditData] = useState("");
-  console.log(contactsList);
+  const [deleteSelectedContact, setDeleteSelectedContact] = useState("");
+  const queryClient = useQueryClient();
 
+  const { mutate } = useMutation({
+    mutationFn: deleteContact,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.getAllContacts] });
+    },
+  });
   const handleConfirm = () => {
     setEditData(undefined);
   };
@@ -16,32 +29,66 @@ export function ContactList({ contactsList, currentPage }) {
   const handleCancel = () => {
     setEditData("");
   };
+  const handlePageChange = (value) => {
+    localStorage.setItem(LOCAL_STORAGE_KEYS.page, value);
+    handleOnPageChange({ page: value });
+  };
+  const handleDelete = () => {
+    mutate(deleteSelectedContact.id);
+    setDeleteSelectedContact("");
+  };
+  const handleCancelDelete = () => {
+    setDeleteSelectedContact("");
+  };
 
   return (
-    <>
+    <div
+      style={{
+        height: "90%",
+        marginTop: "20px",
+        paddingRight: "5px",
+        overflowY: "scroll",
+      }}
+    >
       <List
-        pagination={{ position: "bottom", align: "end" }}
-        dataSource={contactsList}
+        pagination={{
+          position: "bottom",
+          current: contactsData?.curentPage,
+          align: "end",
+          onChange: handlePageChange,
+          pageSize: 10,
+          total: contactsData?.total,
+        }}
+        dataSource={contactsData?.data}
         renderItem={(item, index) => (
           <List.Item
-            onClick={() => setViewContact(item)}
             actions={[
-              <a key="list-delete" href="#delete">
-                Delete
-              </a>,
-              <a
-                key="list-edit"
-                href="#edit"
+              <Button
                 onClick={(e) => {
                   e.stopPropagation();
                   setEditData(item);
                 }}
+                type="link"
+                block
               >
                 Edit
-              </a>,
+              </Button>,
+              <Button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDeleteSelectedContact(item);
+                }}
+                danger
+                type="text"
+                block
+              >
+                Delete
+              </Button>,
             ]}
           >
             <List.Item.Meta
+              style={{ cursor: "pointer" }}
+              onClick={() => setViewContact(item)}
               avatar={
                 <Avatar
                   src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`}
@@ -54,9 +101,8 @@ export function ContactList({ contactsList, currentPage }) {
         )}
       />
       {viewContact && (
-        <ViewContactModal
+        <ViewContactModal2
           onClose={() => setViewContact("")}
-          customFooter={null}
           contactData={viewContact}
         />
       )}
@@ -67,6 +113,17 @@ export function ContactList({ contactsList, currentPage }) {
           onCancel={handleCancel}
         />
       )}
-    </>
+      {deleteSelectedContact && (
+        <ConfirmationModal
+          handleOk={handleDelete}
+          handleCancel={handleCancelDelete}
+          title={`Do you Want to delete 
+          "${deleteSelectedContact.name} ${deleteSelectedContact.surname}"
+           contact?`}
+          okText="Yes"
+          cancelText="No"
+        />
+      )}
+    </div>
   );
 }

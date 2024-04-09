@@ -5,10 +5,10 @@ import "./sidebar.css";
 
 const { Sider } = Layout;
 
-const Sidebar = ({ handleFilterParamsChange }) => {
+const Sidebar = ({ handleOnFilterParamsChange }) => {
   return (
     <Sider className="sidebar-box" width={210}>
-      <Filter handleChange={handleFilterParamsChange} />
+      <Filter handleOnFilterParamsChange={handleOnFilterParamsChange} />
     </Sider>
   );
 };

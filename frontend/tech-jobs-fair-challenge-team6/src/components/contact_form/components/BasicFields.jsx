@@ -1,13 +1,14 @@
 import { Form, Input, Select } from "antd";
 import prefixSelector from "./PrefixSelector";
 import { useState } from "react";
+import { FILTER_PARAMS } from "../../../constants/constants";
 const { Option } = Select;
 
 const BasicFields = () => {
   const [isInternal, setIsInternal] = useState(false);
 
   const handleTypeChange = (value) => {
-    setIsInternal(value === "internal");
+    setIsInternal(value === FILTER_PARAMS.department[0].value);
   };
 
   return (
@@ -48,9 +49,27 @@ const BasicFields = () => {
           },
         ]}
       >
-        <Input addonBefore={prefixSelector} style={{ width: "100%" }} />
+        <Input
+          //  addonBefore={prefixSelector}
+          style={{ width: "100%" }}
+        />
       </Form.Item>
-
+      <Form.Item
+        label="Email:"
+        name="email"
+        rules={[
+          {
+            required: true,
+            message: "This field is required.",
+          },
+          {
+            type: "email",
+            message: "Please enter a valid email address.",
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
       <Form.Item
         name="type"
         label="Type:"
@@ -61,11 +80,11 @@ const BasicFields = () => {
           },
         ]}
       >
-        <Select placeholder="Select a type" onChange={handleTypeChange}>
-          <Option value="internal">Internal</Option>
-          <Option value="external">External</Option>
-          <Option value="partner">Partner</Option>
-        </Select>
+        <Select
+          placeholder="Select a type"
+          onChange={handleTypeChange}
+          options={FILTER_PARAMS.contactType}
+        />
       </Form.Item>
 
       {isInternal ? (
@@ -79,10 +98,10 @@ const BasicFields = () => {
             },
           ]}
         >
-          <Select placeholder="Select a department">
-            <Option value="it">IT</Option>
-            <Option value="hr">HR</Option>
-          </Select>
+          <Select
+            placeholder="Select a department"
+            options={FILTER_PARAMS.department}
+          />
         </Form.Item>
       ) : (
         <Form.Item name="" label="Department:">

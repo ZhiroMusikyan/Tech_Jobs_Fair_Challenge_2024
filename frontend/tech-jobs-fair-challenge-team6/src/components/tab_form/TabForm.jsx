@@ -10,6 +10,7 @@ const TabForm = ({
   onConfirm,
   onCancel,
   initialValues,
+  setEditedValue,
 }) => {
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
@@ -31,11 +32,9 @@ const TabForm = ({
   const onFinish = (values) => {
     form.resetFields();
     showSuccessMsg();
-    console.log(values);
-    onConfirm();
+    onConfirm(values);
   };
   const onFinishFailed = (errorInfo) => {
-    console.log(errorInfo);
     showErrorMsg();
   };
 
@@ -43,7 +42,6 @@ const TabForm = ({
     form.resetFields();
     onCancel();
   };
-
   return (
     <>
       {contextHolder}
