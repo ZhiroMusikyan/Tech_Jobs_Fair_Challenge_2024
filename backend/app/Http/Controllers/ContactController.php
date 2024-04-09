@@ -44,8 +44,8 @@
             }
 
             // Apply filtering based on department ID
-            if (isset($request->department_id)) {
-                $query->ofDepartment($request->input('department_id'));
+            if (isset($request->department_ids)) {
+                $query->ofDepartment($request->input('department_ids'));
             }
 
             $contacts = $query->paginate(10);

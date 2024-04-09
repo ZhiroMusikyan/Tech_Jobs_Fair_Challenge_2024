@@ -54,12 +54,12 @@
          * Scope a query to only include contacts of a specific department.
          *
          * @param Builder $query
-         * @param int $departmentId
+         * @param array $departmentId
          * @return Builder
          */
-        public function scopeOfDepartment(Builder $query, int $departmentId): Builder
+        public function scopeOfDepartment(Builder $query, array $departmentId): Builder
         {
-            return $query->where('department_id', $departmentId);
+            return $query->whereIn('department_id', $departmentId);
         }
 
         /**
