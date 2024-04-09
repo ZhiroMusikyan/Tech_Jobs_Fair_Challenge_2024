@@ -11,10 +11,13 @@ const { Content } = Layout;
 
 function Main() {
   const currentPage = localStorage.getItem(LOCAL_STORAGE_KEYS.page);
-  const currentSort = localStorage.getItem(LOCAL_STORAGE_KEYS.sort);
+  const sortName = localStorage.getItem(LOCAL_STORAGE_KEYS.sortName);
+  const sortDirection = localStorage.getItem(LOCAL_STORAGE_KEYS.sortDirection);
+
   const [filterParams, setFilterParams] = useState({
     page: currentPage,
-    sort: currentSort,
+    sort: sortName,
+    diraction: sortDirection,
   });
   const isLoggedIn = localStorage.getItem(LOCAL_STORAGE_KEYS.isAuth);
   const { isLoading, error, data, refetch } = useQuery({

@@ -6,7 +6,8 @@ export const LOCAL_STORAGE_KEYS = {
   isAuth: "isAuthorizated",
   authUserData: "authorizatedUserData",
   page: "currentPage",
-  sort: "name",
+  sortName: "name",
+  sortDirection: "desc",
 };
 export const FILTER_PARAMS = {
   department: [
