@@ -21,12 +21,12 @@ const EditContactForm = ({ data, onConfirm, onCancel }) => {
     {
       key: "1",
       label: "Basic info",
-      children: <BasicFields></BasicFields>,
+      children: <BasicFields data={data} />,
     },
     {
       key: "2",
       label: "More info",
-      children: <AdvancedFields></AdvancedFields>,
+      children: <AdvancedFields />,
     },
   ];
   const handleConfirm = (value) => {

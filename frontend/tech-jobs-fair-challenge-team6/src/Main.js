@@ -73,7 +73,7 @@ function Main() {
                   contactsData={data}
                   handleOnSort={handleOnSearchSort}
                   handleOnPageChange={handleOnPageChange}
-                ></Contacts>
+                />
               </Content>
             </Layout>
           </Layout>

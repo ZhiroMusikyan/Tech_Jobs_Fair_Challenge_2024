@@ -33,10 +33,12 @@ const createContact = async (contactData) => {
 };
 
 const updateContact = async ({ contactId, contactData }) => {
+  const convertedContactData = convertContactDataIntoBackEndType(contactData);
+
   try {
     const response = await axios.put(
       `${CONTACTS_PATH}/${contactId}`,
-      contactData
+      convertedContactData
     );
     return response.data;
   } catch (error) {

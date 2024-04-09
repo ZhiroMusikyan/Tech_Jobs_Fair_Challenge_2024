@@ -22,7 +22,7 @@ const convertContactDataIntoFrontEndType = (data) => {
       surname: item.surname,
       type: item.type_id,
       userId: item.user_id,
-      // department: item.department_id,
+      department: item.department_id,
     };
   });
   return convertedContactData;
@@ -41,7 +41,7 @@ export const convertContactDataIntoBackEndType = (data) => {
     social_media_url: data.socialMediaURL,
     surname: data.surname,
     type_id: data.type,
-    // department_id: data.department,
+    department_id: data.department,
   };
   return convertedContactData;
 };

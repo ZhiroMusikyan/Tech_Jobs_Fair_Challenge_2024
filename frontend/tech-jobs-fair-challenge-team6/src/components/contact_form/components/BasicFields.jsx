@@ -4,11 +4,13 @@ import { useState } from "react";
 import { FILTER_PARAMS } from "../../../constants/constants";
 const { Option } = Select;
 
-const BasicFields = () => {
-  const [isInternal, setIsInternal] = useState(false);
+const BasicFields = ({ data }) => {
+  const [isInternal, setIsInternal] = useState(
+    data.type === FILTER_PARAMS.contactType[0].value
+  );
 
   const handleTypeChange = (value) => {
-    setIsInternal(value === FILTER_PARAMS.department[0].value);
+    setIsInternal(value === FILTER_PARAMS.contactType[0].value);
   };
 
   return (
