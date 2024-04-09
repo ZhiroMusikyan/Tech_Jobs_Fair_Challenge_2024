@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Avatar, List, Button } from "antd";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import ViewContactModal from "../../../modals/ViewContactModal";
 import EditContactForm from "../../../contact_form/EditContactForm";
 import {
   LOCAL_STORAGE_KEYS,
   QUERY_KEYS,
 } from "../../../../constants/constants";
+import ViewContactModal2 from "../../../modals/ViewContactModal2";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ConfirationModal from "../../../modals/ConfirationModal";
 import { deleteContact } from "../../../../api/contacts";
 
@@ -62,7 +62,6 @@ export function ContactList({ contactsData, handleFilterParam }) {
         dataSource={contactsData?.data}
         renderItem={(item, index) => (
           <List.Item
-            onClick={() => setViewContact(item)}
             actions={[
               <Button
                 onClick={(e) => {
@@ -88,6 +87,8 @@ export function ContactList({ contactsData, handleFilterParam }) {
             ]}
           >
             <List.Item.Meta
+              style={{ cursor: "pointer" }}
+              onClick={() => setViewContact(item)}
               avatar={
                 <Avatar
                   src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`}
@@ -100,9 +101,8 @@ export function ContactList({ contactsData, handleFilterParam }) {
         )}
       />
       {viewContact && (
-        <ViewContactModal
+        <ViewContactModal2
           onClose={() => setViewContact("")}
-          customFooter={null}
           contactData={viewContact}
         />
       )}
