@@ -1,31 +1,24 @@
 import { CONTACTS_PATH, LOCAL_STORAGE_KEYS } from "../constants/constants";
+import qs from "qs";
 import axios from "./axios";
 import {
   TRES,
   convertContactDataIntoBackEndType,
   formatContactData,
-  t,
+  prepareQueryFilterParam,
 } from "./contact.utils";
 
 const getAllContacts = async (filterParams) => {
   let url = CONTACTS_PATH;
   if (filterParams) {
-    // const newObj = {
-    //   ...filterParams,
-    // };
-    // if (filterParams.department) {
-    //   newObj.department_ids = JSON.stringify(filterParams.department);
-    //   delete newObj.department;
-    // }
-
-    const queryParams = new URLSearchParams(filterParams);
-    url += `?${queryParams.toString()}`;
+    const newObj = prepareQueryFilterParam(filterParams);
+    const queryString = qs.stringify(newObj, { arrayFormat: "indices" });
+    url += `?${queryString}`;
   }
+
   const response = await axios.get(url);
   const contacts = response.data.contacts;
-  const tr = TRES;
-  // debugger;
-  const formatedData = formatContactData(tr);
+  const formatedData = formatContactData(contacts);
 
   return formatedData;
 };

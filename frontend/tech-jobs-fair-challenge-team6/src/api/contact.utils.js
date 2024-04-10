@@ -45,6 +45,22 @@ export const convertContactDataIntoBackEndType = (data) => {
   };
   return convertedContactData;
 };
+
+export const prepareQueryFilterParam = (filterParams) => {
+  const newFilterParams = {
+    ...filterParams,
+  };
+  if (filterParams.department) {
+    newFilterParams.department_ids = filterParams.department.map(Number);
+    delete newFilterParams.department;
+  }
+  // if (filterParams.contactType) {
+  //   newFilterParams.type_ids = filterParams.contactType.map(Number);
+  //   delete newFilterParams.contactType;
+  // }
+  return newFilterParams;
+};
+
 export const TRES = {
   current_page: 1,
   data: [

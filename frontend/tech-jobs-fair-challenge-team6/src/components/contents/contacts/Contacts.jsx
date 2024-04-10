@@ -38,7 +38,8 @@ export function Contacts({ contactsData, handleOnSort, handleOnPageChange }) {
     <>
       <Flex justify="space-between" align="center">
         <label style={{ fontWeight: "bold", fontSize: "500" }}>
-          {contactsData?.data.length} contacts
+          {contactsData?.data.length}{" "}
+          {`contact${contactsData?.data.length > 1 ? "s" : ""}`}
         </label>
         <Cascader
           allowClear={false}
@@ -51,7 +52,7 @@ export function Contacts({ contactsData, handleOnSort, handleOnPageChange }) {
       <ContactList
         contactsData={contactsData}
         handleOnPageChange={handleOnPageChange}
-      ></ContactList>
+      />
     </>
   );
 }
