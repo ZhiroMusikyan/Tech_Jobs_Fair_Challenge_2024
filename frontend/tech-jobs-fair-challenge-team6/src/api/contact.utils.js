@@ -82,7 +82,6 @@ export const TRES = {
       updated_at: "2024-04-09T08:06:07.000000Z",
       department_id: 0,
     },
-    ,
     {
       id: 28,
       user_id: 1,
